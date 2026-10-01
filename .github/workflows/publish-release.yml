@@ -3,8 +3,8 @@ on:
   push:
     branches: [main, 'release/**']
     paths:
-      - 'README.md'
-      - 'RELEASE_NOTES_*.md'
+      - '*.md'
+      - '*_VERIFICHE.txt'
       - '*SHA256.txt'
       - '.github/workflows/publish-release.yml'
   workflow_dispatch:
