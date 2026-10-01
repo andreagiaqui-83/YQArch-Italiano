@@ -30,7 +30,7 @@ L'installer `YQArch_Italiano_3.73.exe` è destinato a **Windows x64** nelle comb
 ## Installazione
 
 1. Chiudere AutoCAD.
-2. Scaricare l'installer dalla sezione **Releases**.
+2. Scaricare l'installer verificato dalla pagina **YQArch Italiano** su `andreagiaquinto.it/yqarch-italiano/`.
 3. Avviare `YQArch_Italiano_3.73.exe`.
 4. Riaprire AutoCAD.
 5. Eseguire `YQIT_DIAGNOSTICA_COMPLETA`.
@@ -51,7 +51,7 @@ In AutoCAD sono disponibili:
 
 ## Documentazione
 
-Nel repository sono disponibili le note di rilascio, la matrice di compatibilità e le istruzioni di installazione legacy. La guida completa è distribuita insieme alla release.
+Nel repository sono disponibili le note di rilascio, la matrice di compatibilità e le istruzioni di installazione legacy. La guida completa e i download verificati sono pubblicati anche nella pagina YQArch Italiano del sito.
 
 ## Progetto originale
 
