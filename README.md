@@ -2,57 +2,72 @@
 
 Localizzazione e modernizzazione italiana gratuita di **YQArch per AutoCAD**.
 
-**Versione corrente: 3.61**  
-Ambiente di riferimento e collaudo: **AutoCAD 2027 italiano su Windows 11 x64**.
+**Versione corrente: 3.73**  
+Release pubblicabile del **1 ottobre 2026**.
 
 ## Stato del progetto
 
-- registro verificato di **646 comandi**;
-- guida italiana con **646 schede**;
-- prompt, menu, finestre e pannelli sottoposti a revisione massiva;
+- guida italiana con **646 schede** ricercabili;
+- Ribbon con **10 pannelli** e **130 accessi diretti**;
+- **23 categorie** e **547 voci** nelle espansioni;
+- catalogo di **195 blocchi DWG** con 195 anteprime;
+- inserimento blocchi in un solo passaggio: selezione → Inserisci → punto nel DWG → completamento;
 - diagnostica integrata con `YQIT_DIAGNOSTICA_COMPLETA` e `YQIT_COMPATIBILITA`;
 - core storico conservato quando stabile;
-- `SECURELOAD` e `TRUSTEDPATHS` non vengono modificati.
+- `SECURELOAD`, `TRUSTEDPATHS` e il CUI principale non vengono disattivati o azzerati dall'installer.
+
+## Collaudo della 3.73
+
+La 3.73 è stata installata e collaudata sul PC di riferimento con **AutoCAD 2026**. Sono stati verificati l'aggiornamento, il caricamento, la Ribbon e l'inserimento diretto dei blocchi.
+
+Il collaudo del PC di riferimento e i test automatici non equivalgono a una certificazione di tutti i 646 comandi né di ogni combinazione AutoCAD/Windows.
 
 ## Compatibilità
 
 | Fascia | Versioni AutoCAD per Windows | Stato |
 |---|---|---|
-| Primaria | AutoCAD 2021–2027 | progettata e verificata come fascia principale |
-| Estesa | AutoCAD 2015–2020 | compatibilità tecnica verificata; consigliato collaudo reale |
-| Legacy | AutoCAD 2008–2014 | best effort |
-| Legacy parziale | AutoCAD 2004–2007 | alcune funzioni possono dipendere da capacità introdotte successivamente |
+| Collaudo reale | AutoCAD 2026 | installazione/aggiornamento, Ribbon e inserimento blocchi verificati |
+| Moderna | AutoCAD 2010–2025 e 2027 | compatibilità progettata e controllata staticamente; non tutte le release sono state eseguite realmente |
+| Legacy | AutoCAD 2007–2009 | menu/toolbar e procedura legacy; tutti i 195 DWG del catalogo sono leggibili |
+| Legacy parziale | AutoCAD 2004–2006 | 147/195 blocchi leggibili; 48 AC1021 richiedono AutoCAD 2007+ |
 
-L'installer `YQArch_Italiano_3.61.exe` è destinato a **Windows 10/11 x64**. Per sistemi precedenti o installazioni a 32 bit è disponibile il pacchetto ZIP portabile con procedura manuale.
+L'installer `YQArch_Italiano_3.73.exe` è un eseguibile **Windows x64**. Per sistemi legacy o 32 bit è disponibile lo ZIP con procedura manuale. La compatibilità del plugin non rende supportata una coppia AutoCAD/Windows che Autodesk non supporta.
 
-> La compatibilità di YQArch Italiano non rende supportata una combinazione AutoCAD/Windows che Autodesk non supporta ufficialmente. AutoCAD 2027, per esempio, richiede ufficialmente Windows 11 a 64 bit.
+AutoCAD LT, AutoCAD per Mac e CAD alternativi non sono dichiarati compatibili da questa distribuzione.
+
+## Download
+
+La release pubblica è distribuita direttamente dal sito del progetto:
+
+- [Installer EXE 3.73](https://andreagiaquinto.it/downloads/yqarch/YQArch_Italiano_3.73.exe)
+- [Pacchetto ZIP 3.73](https://andreagiaquinto.it/downloads/yqarch/YQArch_Italiano_3.73.zip)
+- [Guida completa](https://andreagiaquinto.it/downloads/yqarch/YQArch_Italiano_3.73_GUIDA.html)
+- [Pagina del progetto](https://andreagiaquinto.it/yqarch-italiano/)
+
+Non è necessario installare versioni precedenti prima della 3.73.
+
+## Integrità versione 3.73
+
+- EXE SHA-256: `07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d`
+- ZIP SHA-256: `ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2`
+
+L'EXE non è firmato Authenticode; Windows può mostrare un avviso di reputazione. Verificare l'hash e non disattivare le protezioni di Windows o AutoCAD.
 
 ## Installazione
 
-1. Chiudere AutoCAD.
-2. Scaricare l'installer dalla sezione **Releases**.
-3. Avviare `YQArch_Italiano_3.61.exe`.
-4. Riaprire AutoCAD.
-5. Eseguire `YQIT_DIAGNOSTICA_COMPLETA`.
+1. Chiudere tutte le sessioni di AutoCAD.
+2. Scaricare l'EXE 3.73 dal sito.
+3. Avviarlo con l'account Windows con cui viene usato AutoCAD.
+4. Completare l'installazione/aggiornamento.
+5. Riaprire AutoCAD ed eseguire `YQIT_DIAGNOSTICA_COMPLETA`.
+6. Provare i comandi su una copia del DWG.
 
-Per installazioni legacy utilizzare il pacchetto ZIP e consultare `INSTALLAZIONE_LEGACY.md`.
+Per installazioni manuali o legacy consultare `INSTALLAZIONE_LEGACY.md`.
 
-## Verifica installazione
+## Compatibilità del catalogo
 
-In AutoCAD sono disponibili:
-
-- `YQIT_DIAGNOSTICA_COMPLETA` — verifica il caricamento del runtime e il registro dei 646 comandi;
-- `YQIT_COMPATIBILITA` — mostra versione AutoCAD, piattaforma, LISPSYS e fascia di compatibilità.
-
-## Integrità versione 3.61
-
-- EXE SHA-256: `02d998016c8458a1a103d87b2bd6cda84dd23e4f58eca9d7f5a34e6d4a0fe7d9`
-- ZIP SHA-256: `945e344474f58cd2b187ebd472502f5811604b103d5480124f1a5571a5629137`
-
-## Documentazione
-
-Nel repository sono disponibili le note di rilascio, la matrice di compatibilità e le istruzioni di installazione legacy. La guida completa è distribuita insieme alla release.
+I 195 DWG inclusi sono: **16 AC1009, 2 AC1014, 129 AC1018 e 48 AC1021**. AutoCAD 2004–2006 può leggere 147 file; i 48 AC1021 richiedono AutoCAD 2007 o successivo e la 3.73 li intercetta prima dell'inserimento.
 
 ## Progetto originale
 
-YQArch Italiano è una localizzazione e modernizzazione indipendente del progetto YQArch originale. Il progetto originale, i relativi autori e le relative risorse mantengono la propria identità e attribuzione.
+YQArch Italiano è una localizzazione e modernizzazione indipendente del progetto YQArch originale. Il progetto originale, i relativi autori, AutoCAD e i rispettivi marchi mantengono la propria identità e titolarità.
