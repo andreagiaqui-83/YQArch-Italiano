@@ -18,9 +18,9 @@ Collaudo reale della release 3.73: **AutoCAD 2026 italiano** nell’ambiente del
 
 | Fascia | Versioni AutoCAD per Windows | Stato |
 |---|---|---|
-| Primaria | AutoCAD 2021–2027 | progettata e verificata come fascia principale |
-| Estesa | AutoCAD 2015–2020 | compatibilità tecnica verificata; consigliato collaudo reale |
-| Legacy | AutoCAD 2008–2014 | best effort |
+| Primaria | AutoCAD 2021–2027 | collaudo reale su AutoCAD 2026 italiano; altre versioni della fascia da verificare su installazioni reali |
+| Estesa | AutoCAD 2015–2020 | controlli statici; collaudo reale richiesto sulla specifica versione |
+| Legacy | AutoCAD 2007–2014 | best effort |
 | Legacy parziale | AutoCAD 2004–2006 | 147/195 DWG del catalogo sono in formati leggibili; 48 blocchi AC1021 richiedono AutoCAD 2007+ e vengono intercettati prima dell'inserimento |
 
 L'installer `YQArch_Italiano_3.73.exe` è destinato a **Windows x64** nelle combinazioni supportate dalla specifica versione di AutoCAD. Per installazioni legacy è disponibile il pacchetto ZIP con procedura manuale.
@@ -30,10 +30,14 @@ L'installer `YQArch_Italiano_3.73.exe` è destinato a **Windows x64** nelle comb
 ## Installazione
 
 1. Chiudere AutoCAD.
-2. Scaricare l'installer verificato dalla pagina **YQArch Italiano** su `andreagiaquinto.it/yqarch-italiano/`.
+2. Scaricare l'installer verificato dalla pagina **YQArch Italiano** su [andreagiaquinto.it/yqarch-italiano/](https://andreagiaquinto.it/yqarch-italiano/).
 3. Avviare `YQArch_Italiano_3.73.exe`.
 4. Riaprire AutoCAD.
 5. Eseguire `YQIT_DIAGNOSTICA_COMPLETA`.
+
+L’EXE non è firmato Authenticode: Windows SmartScreen può mostrare un avviso di reputazione. Controllare provenienza e SHA-256 senza disattivare le protezioni di Windows.
+
+La Ribbon conserva 10 pannelli, ciascuno con 3 icone grandi e 10 piccole: 130 accessi diretti. Nel catalogo: **Seleziona → Inserisci → clic nel DWG → inserimento completato**. Questo flusso è stato collaudato nell’ambiente indicato; non equivale al collaudo individuale dei 646 comandi.
 
 Per installazioni legacy utilizzare il pacchetto ZIP e consultare `INSTALLAZIONE_LEGACY.md`.
 

@@ -1,0 +1,75 @@
+name: Verify and publish approved YQArch release
+on:
+  push:
+    branches: [main, 'release/**']
+    paths:
+      - 'README.md'
+      - 'RELEASE_NOTES_*.md'
+      - '*SHA256.txt'
+      - '.github/workflows/publish-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check approved release metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          readme=Path('README.md').read_text()
+          assert 'Versione corrente: 3.73' in readme
+          assert 'AutoCAD 2026 italiano' in readme
+          sha=Path('YQArch_Italiano_3.73_SHA256.txt').read_text()
+          for digest in ['07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d','ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2']:
+              assert digest in sha and digest in readme
+          assert Path('RELEASE_NOTES_3.73.md').is_file()
+          assert Path('COMPATIBILITA_AUTOCAD_WINDOWS.md').is_file()
+          assert Path('INSTALLAZIONE_LEGACY.md').is_file()
+          print('Approved 3.73 metadata verified; no executable build.')
+          PY
+  publish:
+    if: github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve already published original binaries and companion documents
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import urllib.request,hashlib
+          out=Path('release-assets');out.mkdir()
+          expected={'exe':'07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d','zip':'ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2'}
+          names=['YQArch_Italiano_3.73.'+ext for ext in expected]+['YQArch_Italiano_3.73_'+kind+'.html' for kind in ['GUIDA','REPORT','RIBBON','CATALOGO']]+['YQArch_Italiano_3.73_SHA256.txt']
+          for name in names:
+              response=urllib.request.urlopen('https://andreagiaquinto.it/downloads/yqarch/'+name,timeout=90)
+              assert response.status==200
+              data=response.read()
+              ext=name.rsplit('.',1)[-1]
+              if ext in expected:
+                  assert hashlib.sha256(data).hexdigest()==expected[ext],name
+                  assert data[:2]==(b'MZ' if ext=='exe' else b'PK')
+              (out/name).write_bytes(data)
+          PY
+      - name: Publish using the existing numbered-release convention
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if gh release view 3.73 >/dev/null 2>&1; then
+            mkdir existing-assets
+            gh release download 3.73 --dir existing-assets --pattern '*.exe' --pattern '*.zip'
+            cmp release-assets/YQArch_Italiano_3.73.exe existing-assets/YQArch_Italiano_3.73.exe
+            cmp release-assets/YQArch_Italiano_3.73.zip existing-assets/YQArch_Italiano_3.73.zip
+            echo 'Existing release already contains the approved binaries; not overwritten.'
+          else
+            gh release create 3.73 release-assets/* --target "$RELEASE_COMMIT" --title 'YQArch Italiano 3.73' --notes-file RELEASE_NOTES_3.73.md
+          fi

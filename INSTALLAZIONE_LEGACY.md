@@ -37,7 +37,7 @@ Prima di sostituire una versione esistente:
 Se un `acad.lsp`/`acaddoc.lsp` personale è già in uso, aggiungere soltanto l'eventuale chiamata al bootstrap preservando integralmente le altre routine.
 
 ## Ripristino
-In caso di errore o annullamento, l'installer tenta il rollback delle modifiche già eseguite. I backup e il journal restano nella cartella locale di YQArch Italiano. In caso di spegnimento imprevisto usare il journal, a AutoCAD chiuso, per ripristinare i file che esistevano e rimuovere esclusivamente quelli creati da quella installazione.
+In caso di errore o annullamento, l'installer tenta il rollback delle modifiche già eseguite. I backup e il journal restano nella cartella locale di YQArch Italiano. In caso di spegnimento imprevisto usare il journal, ad AutoCAD chiuso, per ripristinare i file che esistevano e rimuovere esclusivamente quelli creati da quella installazione.
 
 La 3.71 resta la baseline di rollback principale perché è stata collaudata sul PC di riferimento.
 
