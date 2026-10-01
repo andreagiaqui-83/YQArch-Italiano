@@ -18,7 +18,7 @@ Il catalogo distribuito contiene 195 DWG: **16 AC1009, 2 AC1014, 129 AC1018 e 48
 AutoCAD LT, AutoCAD per Mac e prodotti CAD alternativi **non sono certificati** da questo pacchetto.
 
 ## Windows
-L'installer `YQArch_Italiano_3.73.exe` è un eseguibile **Windows x64**. La compatibilità effettiva dipende dalla specifica coppia AutoCAD/Windows supportata da Autodesk; per AutoCAD 2027 Autodesk richiede una versione **64 bit di Windows ancora supportata da Microsoft**.
+L'installer `YQArch_Italiano_3.73.exe` è un eseguibile **Windows x64**. AutoCAD 2027, secondo i requisiti Autodesk correnti, deve essere installato su una versione **64 bit di Windows ancora supportata da Microsoft**. La compatibilità delle release AutoCAD precedenti dipende dalla specifica coppia AutoCAD/Windows supportata da Autodesk.
 
 Su sistemi legacy o 32 bit non usare l'EXE x64: utilizzare lo ZIP e la procedura descritta in `INSTALLAZIONE_LEGACY.md`. Questa possibilità di installazione manuale non costituisce certificazione di ogni vecchio sistema operativo.
 
