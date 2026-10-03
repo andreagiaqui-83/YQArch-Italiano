@@ -1,36 +1,25 @@
-# Compatibilità YQArch Italiano 3.73
+# Compatibilità YQArch Italiano 3.78
 
-## Stato verificato
-YQArch Italiano 3.73 deriva direttamente dalla **3.71 collaudata dall'utente** e la release 3.73 è stata a sua volta installata e collaudata con esito positivo sul PC di riferimento con **AutoCAD 2026 italiano**. Sono stati verificati installazione/aggiornamento, Ribbon e il flusso del catalogo blocchi **Seleziona → Inserisci → scegli il punto nel DWG → inserimento completato**.
+## Evidenza disponibile
+Collaudo nativo della 3.77 approvato dall'utente il 3 ottobre 2026: AutoCAD 2027 italiano, ACADVER 26.0s, LISPSYS=1, Windows NT 10.0 Intel64. Comandi definiti 646/646, menu e struttura PASS, Ribbon alla stessa altezza di Inizio. La 3.78 conserva byte per byte il CUIx e i componenti funzionali della 3.77; cambiano riferimenti di versione, descrizione diagnostica e documentazione. Il report non esegue né certifica la geometria di ogni comando. Le prove storiche su AutoCAD 2026 restano riferite alle loro versioni.
 
-La build e i test automatici vengono eseguiti in ambiente non-Windows: non equivalgono a un collaudo reale su ogni combinazione AutoCAD/Windows. Per questo la compatibilità è dichiarata per livelli di evidenza, senza estendere il test del PC di riferimento a sistemi non provati.
+| Versioni | Livello verificato |
+|---|---|
+| AutoCAD completo 2010–2027 Windows | Percorsi progettati e controlli statici; nessuna certificazione di tutte le versioni. CUIx caricato da ACADVER 18.0. Layout della 3.77 verificato su AutoCAD 2027 italiano e conservato nella 3.78. |
+| AutoCAD completo 2007–2009 Windows | Percorso legacy menu/toolbar; 195 formati DWG leggibili. Prova nativa non eseguita. |
+| AutoCAD completo 2004–2006 Windows | Percorso legacy parziale: 147 DWG leggibili, 48 AC1021 bloccati preventivamente. Prova nativa non eseguita. |
 
-## AutoCAD
-| Versioni | Stato della 3.73 | Note |
-|---|---|---|
-| AutoCAD completo 2026 italiano | **Collaudo reale completato** | La 3.73 è stata installata e verificata sul PC di riferimento: aggiornamento, Ribbon e inserimento blocchi funzionanti. |
-| AutoCAD completo 2010–2026 Windows | **Compatibilità progettata e controllata staticamente** | La Ribbon viene caricata solo con `ACADVER >= 18.0`; i file DWG inclusi sono in formati leggibili da queste versioni. Non tutte le release sono state eseguite realmente. |
-| AutoCAD completo 2007–2009 Windows | **Percorso legacy** | Niente Ribbon della 3.73; usare menu/toolbar e installazione legacy. Tutti i 195 blocchi del catalogo sono in formati AutoCAD 2007 o precedenti. |
-| AutoCAD completo 2004–2006 Windows | **Compatibilità legacy parziale** | 147 dei 195 blocchi inclusi sono in formato AutoCAD 2004 o precedente; 48 sono `AC1021` (AutoCAD 2007). La 3.73 li riconosce prima dell'inserimento e li blocca con un messaggio chiaro invece di tentare un caricamento incompatibile. |
+Il catalogo contiene 16 AC1009, 2 AC1014, 129 AC1018, 48 AC1021, tutti preservati. La leggibilità del formato non certifica l'intero plugin.
+AutoCAD LT, Mac e CAD alternativi non sono certificati.
 
-Il catalogo distribuito contiene 195 DWG: **16 AC1009, 2 AC1014, 129 AC1018 e 48 AC1021**. Autodesk identifica `AC1018` come formato AutoCAD 2004/2005/2006 e `AC1021` come formato AutoCAD 2007/2008/2009. Un AutoCAD precedente non può aprire direttamente un DWG salvato in un formato più recente. I 48 file `AC1021` non vengono quindi presentati come compatibili con AutoCAD 2004–2006.
+## Windows e sicurezza
+EXE x64 con PowerShell e WPF dell'installer storico. Dipende dalla specifica coppia AutoCAD/Windows supportata da Autodesk. I requisiti Autodesk 2027 consultati richiedono Windows a 64 bit ancora supportato da Microsoft e .NET 10. Per le altre release valgono i loro requisiti; non è stata eseguita qui una prova Windows.
+SECURELOAD, TRUSTEDPATHS e LISPSYS non sono modificati. SmartScreen può segnalare la reputazione dell'EXE non firmato: verificare provenienza e SHA senza disattivare le protezioni.
 
-AutoCAD LT, AutoCAD per Mac e prodotti CAD alternativi **non sono certificati** da questo pacchetto.
+## Ribbon
+Un'unica riga principale: 1 grande e 5 piccoli affiancati in sottopannello 3+2. Altri 7 accessi per pannello nel flyout, categorie originali conservate. Le schermate della 3.77 confermano la stessa altezza di Inizio sul PC dell’utente. Questo riscontro non viene esteso a ogni risoluzione, scala DPI o altra versione AutoCAD.
 
-## Windows
-L'installer `YQArch_Italiano_3.73.exe` è un eseguibile **Windows x64**. AutoCAD 2027, secondo i requisiti Autodesk correnti, deve essere installato su una versione **64 bit di Windows ancora supportata da Microsoft**. La compatibilità delle release AutoCAD precedenti dipende dalla specifica coppia AutoCAD/Windows supportata da Autodesk.
-
-Su sistemi legacy o 32 bit non usare l'EXE x64: utilizzare lo ZIP e la procedura descritta in `INSTALLAZIONE_LEGACY.md`. Questa possibilità di installazione manuale non costituisce certificazione di ogni vecchio sistema operativo.
-
-## Sicurezza e codifica
-La 3.73 **non modifica automaticamente** `SECURELOAD`, `TRUSTEDPATHS` o `LISPSYS`. Se il profilo AutoCAD impedisce il caricamento, configurare la cartella del plugin secondo le policy del proprio ambiente senza disattivare globalmente le protezioni.
-
-I nuovi LSP/MNL sono distribuiti in codifica compatibile con il core storico; non viene ricompilato né alterato il FAS/VLX originale. Le DLL storiche delle immagini sono resource-only e vengono preservate.
-
-## Ribbon e aree di lavoro
-La Ribbon è un CUIx parziale indipendente. Il caricatore non sostituisce `acad.cuix`, non azzera il profilo e non modifica le interfacce di BlockHub CAD o Express Tools. Gli identificatori interni della scheda e dei pannelli restano volutamente stabili rispetto alla baseline funzionante per ridurre il rischio di regressioni tra aree di lavoro.
-
-## Riferimenti Autodesk verificati il 1 ottobre 2026
-- Compatibilità formati DWG: https://www.autodesk.com/it/support/technical/article/caas/sfdcarticles/sfdcarticles/ITA/AutoCAD-drawing-file-format.html
-- Codici versione DWG: https://www.autodesk.com/it/support/technical/article/caas/sfdcarticles/sfdcarticles/ITA/drawing-version-codes-for-autocad.html
-- Requisiti installazione AutoCAD 2027: https://help.autodesk.com/cloudhelp/2027/ENU/AutoCAD-ReleaseNotes/files/installation/INSTALLATION_REQUIREMENTS_AUTOCAD_2027.html
+## Fonti
+- https://help.autodesk.com/cloudhelp/2027/ENU/AutoCAD-ReleaseNotes/files/installation/INSTALLATION_REQUIREMENTS_AUTOCAD_2027.html
+- https://help.autodesk.com/cloudhelp/2021/ENU/AutoCAD-Customization/files/GUID-5DAC6811-BA2D-422D-9B2E-BC1E6C9A5C90.htm
+- https://www.autodesk.com/it/support/technical/article/caas/sfdcarticles/sfdcarticles/ITA/drawing-version-codes-for-autocad.html

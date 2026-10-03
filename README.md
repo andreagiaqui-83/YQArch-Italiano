@@ -2,8 +2,9 @@
 
 Localizzazione e modernizzazione italiana gratuita di **YQArch per AutoCAD**.
 
-**Versione corrente: 3.73**  
-Collaudo reale della release 3.73: **AutoCAD 2026 italiano** nell’ambiente dell’autore. Le altre combinazioni AutoCAD/Windows restano da verificare su installazioni reali.
+**Versione corrente: 3.78**
+
+Verifiche automatiche della 3.78 e CUIx identico alla **3.77 collaudata su AutoCAD 2027 italiano**: 646/646 comandi definiti, zero mancanti, menu e altezza Ribbon confermati. Il report nativo non esegue i comandi né certifica ogni risultato geometrico. Le altre combinazioni AutoCAD/Windows restano da verificare su installazioni reali.
 
 ## Stato del progetto
 
@@ -18,12 +19,12 @@ Collaudo reale della release 3.73: **AutoCAD 2026 italiano** nell’ambiente del
 
 | Fascia | Versioni AutoCAD per Windows | Stato |
 |---|---|---|
-| Primaria | AutoCAD 2021–2027 | collaudo reale su AutoCAD 2026 italiano; altre versioni della fascia da verificare su installazioni reali |
+| Primaria | AutoCAD 2021–2027 | collaudo nativo 3.77 su AutoCAD 2027 italiano; stesso CUIx nella 3.78; altre versioni da verificare |
 | Estesa | AutoCAD 2015–2020 | controlli statici; collaudo reale richiesto sulla specifica versione |
 | Legacy | AutoCAD 2007–2014 | best effort |
 | Legacy parziale | AutoCAD 2004–2006 | 147/195 DWG del catalogo sono in formati leggibili; 48 blocchi AC1021 richiedono AutoCAD 2007+ e vengono intercettati prima dell'inserimento |
 
-L'installer `YQArch_Italiano_3.73.exe` è destinato a **Windows x64** nelle combinazioni supportate dalla specifica versione di AutoCAD. Per installazioni legacy è disponibile il pacchetto ZIP con procedura manuale.
+L'installer `YQArch_Italiano_3.78.exe` è destinato a **Windows x64** nelle combinazioni supportate dalla specifica versione di AutoCAD. Per installazioni legacy è disponibile il pacchetto ZIP con procedura manuale.
 
 > La compatibilità di YQArch Italiano non rende supportata una combinazione AutoCAD/Windows che Autodesk non supporta ufficialmente. Verifica sempre i requisiti Autodesk della release di AutoCAD utilizzata.
 
@@ -31,13 +32,13 @@ L'installer `YQArch_Italiano_3.73.exe` è destinato a **Windows x64** nelle comb
 
 1. Chiudere AutoCAD.
 2. Scaricare l'installer verificato dalla pagina **YQArch Italiano** su [andreagiaquinto.it/yqarch-italiano/](https://andreagiaquinto.it/yqarch-italiano/).
-3. Avviare `YQArch_Italiano_3.73.exe`.
+3. Avviare `YQArch_Italiano_3.78.exe`.
 4. Riaprire AutoCAD.
 5. Eseguire `YQIT_DIAGNOSTICA_COMPLETA`.
 
 L’EXE non è firmato Authenticode: Windows SmartScreen può mostrare un avviso di reputazione. Controllare provenienza e SHA-256 senza disattivare le protezioni di Windows.
 
-La Ribbon conserva 10 pannelli, ciascuno con 3 icone grandi e 10 piccole: 130 accessi diretti. Nel catalogo: **Seleziona → Inserisci → clic nel DWG → inserimento completato**. Questo flusso è stato collaudato nell’ambiente indicato; non equivale al collaudo individuale dei 646 comandi.
+La Ribbon conserva 10 pannelli: un grande affiancato a cinque piccoli (3+2), più sette accessi nel flyout per pannello. Sono 60 accessi visibili e 70 nel flyout, 130 in totale; 23 categorie e 547 voci storiche conservate. Nel catalogo: **Seleziona → Inserisci → clic nel DWG → inserimento completato**. Il comportamento del catalogo è conservato; la verifica delle definizioni non equivale al collaudo individuale dei 646 comandi.
 
 Per installazioni legacy utilizzare il pacchetto ZIP e consultare `INSTALLAZIONE_LEGACY.md`.
 
@@ -48,10 +49,10 @@ In AutoCAD sono disponibili:
 - `YQIT_DIAGNOSTICA_COMPLETA` — verifica il caricamento del runtime e il registro dei 646 comandi;
 - `YQIT_COMPATIBILITA` — mostra versione AutoCAD, piattaforma, LISPSYS e fascia di compatibilità.
 
-## Integrità versione 3.73
+## Integrità versione 3.78
 
-- EXE SHA-256: `07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d`
-- ZIP SHA-256: `ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2`
+- EXE SHA-256: `f134c2783721956daea5d3c1176302f31c944bcdc68f332ae87894b2a36c8cc9`
+- ZIP SHA-256: `ecd56dd0238cd9a949a452a922e2b67075d2d09c9ac04cd5851f88ed79e48c4b`
 
 ## Documentazione
 

@@ -21,15 +21,15 @@ jobs:
           from pathlib import Path
           import re
           readme=Path('README.md').read_text()
-          assert 'Versione corrente: 3.73' in readme
-          assert 'AutoCAD 2026 italiano' in readme
-          sha=Path('YQArch_Italiano_3.73_SHA256.txt').read_text()
-          for digest in ['07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d','ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2']:
+          assert 'Versione corrente: 3.78' in readme
+          assert 'AutoCAD 2027 italiano' in readme
+          sha=Path('YQArch_Italiano_3.78_SHA256.txt').read_text()
+          for digest in ['f134c2783721956daea5d3c1176302f31c944bcdc68f332ae87894b2a36c8cc9','ecd56dd0238cd9a949a452a922e2b67075d2d09c9ac04cd5851f88ed79e48c4b']:
               assert digest in sha and digest in readme
-          assert Path('RELEASE_NOTES_3.73.md').is_file()
+          assert Path('RELEASE_NOTES_3.78.md').is_file()
           assert Path('COMPATIBILITA_AUTOCAD_WINDOWS.md').is_file()
           assert Path('INSTALLAZIONE_LEGACY.md').is_file()
-          print('Approved 3.73 metadata verified; no executable build.')
+          print('Approved 3.78 metadata verified; no executable build.')
           PY
   publish:
     if: github.ref == 'refs/heads/main'
@@ -45,8 +45,8 @@ jobs:
           from pathlib import Path
           import urllib.request,hashlib
           out=Path('release-assets');out.mkdir()
-          expected={'exe':'07165f6a941ebb4b97e4842d4cdf4a03a017bd433cda8a17eb8f7aa419c6280d','zip':'ec14d087067620222a721da25c1034167edb9411741ac5fe5dc69ba76c839df2'}
-          names=['YQArch_Italiano_3.73.'+ext for ext in expected]+['YQArch_Italiano_3.73_'+kind+'.html' for kind in ['GUIDA','REPORT','RIBBON','CATALOGO']]+['YQArch_Italiano_3.73_SHA256.txt']
+          expected={'exe':'f134c2783721956daea5d3c1176302f31c944bcdc68f332ae87894b2a36c8cc9','zip':'ecd56dd0238cd9a949a452a922e2b67075d2d09c9ac04cd5851f88ed79e48c4b'}
+          names=['YQArch_Italiano_3.78.'+ext for ext in expected]+['YQArch_Italiano_3.78_'+kind+'.html' for kind in ['GUIDA','REPORT','RIBBON','CATALOGO']]+['YQArch_Italiano_3.78_SHA256.txt']
           for name in names:
               response=urllib.request.urlopen('https://andreagiaquinto.it/downloads/yqarch/'+name,timeout=90)
               assert response.status==200
@@ -64,12 +64,12 @@ jobs:
           RELEASE_COMMIT: ${{ github.sha }}
         run: |
           set -euo pipefail
-          if gh release view 3.73 >/dev/null 2>&1; then
+          if gh release view 3.78 >/dev/null 2>&1; then
             mkdir existing-assets
-            gh release download 3.73 --dir existing-assets --pattern '*.exe' --pattern '*.zip'
-            cmp release-assets/YQArch_Italiano_3.73.exe existing-assets/YQArch_Italiano_3.73.exe
-            cmp release-assets/YQArch_Italiano_3.73.zip existing-assets/YQArch_Italiano_3.73.zip
+            gh release download 3.78 --dir existing-assets --pattern '*.exe' --pattern '*.zip'
+            cmp release-assets/YQArch_Italiano_3.78.exe existing-assets/YQArch_Italiano_3.78.exe
+            cmp release-assets/YQArch_Italiano_3.78.zip existing-assets/YQArch_Italiano_3.78.zip
             echo 'Existing release already contains the approved binaries; not overwritten.'
           else
-            gh release create 3.73 release-assets/* --target "$RELEASE_COMMIT" --title 'YQArch Italiano 3.73' --notes-file RELEASE_NOTES_3.73.md
+            gh release create 3.78 release-assets/* --target "$RELEASE_COMMIT" --title 'YQArch Italiano 3.78' --notes-file RELEASE_NOTES_3.78.md
           fi
