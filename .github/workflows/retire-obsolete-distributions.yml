@@ -1,0 +1,48 @@
+name: Retire obsolete distributions requested by author
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/retire-obsolete-distributions.yml']
+permissions:
+  contents: write
+jobs:
+  retire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate and remove the explicitly identified old releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request, urllib.error
+          repository = os.environ['GITHUB_REPOSITORY']
+          assert repository == "andreagiaqui-83/YQArch-Italiano"
+          expected = [{"id":402710055,"tag":"3.78","assets":[{"id":608617484,"name":"YQArch_Italiano_3.78.exe"},{"id":608617486,"name":"YQArch_Italiano_3.78.zip"},{"id":608617485,"name":"YQArch_Italiano_3.78_CATALOGO.html"},{"id":608617482,"name":"YQArch_Italiano_3.78_GUIDA.html"},{"id":608617483,"name":"YQArch_Italiano_3.78_REPORT.html"},{"id":608617497,"name":"YQArch_Italiano_3.78_RIBBON.html"},{"id":608617498,"name":"YQArch_Italiano_3.78_SHA256.txt"}]},{"id":400917149,"tag":"3.73","assets":[{"id":603153491,"name":"YQArch_Italiano_3.73.exe"},{"id":603153485,"name":"YQArch_Italiano_3.73.zip"},{"id":603153484,"name":"YQArch_Italiano_3.73_CATALOGO.html"},{"id":603153492,"name":"YQArch_Italiano_3.73_GUIDA.html"},{"id":603153490,"name":"YQArch_Italiano_3.73_REPORT.html"},{"id":603153506,"name":"YQArch_Italiano_3.73_RIBBON.html"},{"id":603153507,"name":"YQArch_Italiano_3.73_SHA256.txt"}]},{"id":397802441,"tag":"3.61","assets":[{"id":593724694,"name":"YQArch_Italiano_3.61.exe"},{"id":593724634,"name":"YQArch_Italiano_3.61.zip"},{"id":593724718,"name":"YQArch_Italiano_3.61_GUIDA.html"}]}]
+          base = 'https://api.github.com/repos/' + repository
+          headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'}
+          def api(path, method='GET'):
+              request = urllib.request.Request(base + path, headers=headers, method=method)
+              try:
+                  with urllib.request.urlopen(request, timeout=30) as response:
+                      data = response.read()
+                      return json.loads(data) if data else None
+              except urllib.error.HTTPError as error:
+                  if error.code == 404: return None
+                  raise
+          # Validate every intended release and every attached asset before deleting anything.
+          for item in expected:
+              actual = api('/releases/' + str(item['id']))
+              if actual is not None:
+                  assert actual['tag_name'] == item['tag'], 'Unexpected release tag'
+                  assert [{'id': a['id'], 'name': a['name']} for a in actual['assets']] == item['assets'], 'Release assets changed'
+          for item in expected:
+              api('/releases/' + str(item['id']), 'DELETE')
+              assert api('/releases/' + str(item['id'])) is None
+              api('/git/refs/tags/' + item['tag'], 'DELETE')
+              assert api('/git/refs/tags/' + item['tag']) is None
+              print('Retired release and tag:', item['tag'], 'assets:', len(item['assets']))
+          remaining = api('/releases?per_page=100')
+          assert remaining == [], 'Other releases remain; inspect separately'
+          print('Verified: no published releases remain in', repository)
+          PY
